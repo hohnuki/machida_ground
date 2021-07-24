@@ -111,11 +111,17 @@ class GroundNotifier(Scraper) :
 
       if("空きあり" in message_simin):
         # 町田市民球場の空き状況に△があった場合はクリックする
-        new_month_date = int(month_date) + 1;
-        if("空きあり" in message_simin and sunday_date[index_num_simin] < sunday_date[0]):
+        new_month_date = int(month_date) + 1
+        if("空きあり" in message_simin and sunday_date[index_num_simin-1] < sunday_date[0] and sunday_date[index_num_simin-1] >= 10):
+            self.click('#dlRepeat_ctl00_tpItem_dgTable_ctl02_b2021' + '0' + str(new_month_date) + str(sunday_date[index_num_simin - 1]))
+            time.sleep(2)
+        elif("空きあり" in message_simin and sunday_date[index_num_simin-1] < sunday_date[0]):
             self.click('#dlRepeat_ctl00_tpItem_dgTable_ctl02_b2021' + '0' + str(new_month_date) + '0' + str(sunday_date[index_num_simin - 1]))
             time.sleep(2)
-        if("空きあり" in message_simin and sunday_date[index_num_simin] > sunday_date[0]):
+        if("空きあり" in message_simin and int(sunday_date[index_num_simin-1]) >= int(sunday_date[0]) and int(sunday_date[index_num_simin-1]) >= 10):
+            self.click('#dlRepeat_ctl00_tpItem_dgTable_ctl02_b2021' + '0' + str(month_date) + str(sunday_date[index_num_simin - 1]))
+            time.sleep(2)
+        elif("空きあり" in message_simin and int(sunday_date[index_num_simin-1]) >= int(sunday_date[0])):
             self.click('#dlRepeat_ctl00_tpItem_dgTable_ctl02_b2021' + '0' + str(month_date) + '0' + str(sunday_date[index_num_simin - 1]))
             time.sleep(2)
 
@@ -161,9 +167,9 @@ class GroundNotifier(Scraper) :
 
 
         if(sunday_date[index_num_simin] < sunday_date[0]):
-          message =  "町田市民球場" + " " + str(new_month_date) + "月" + str(sunday_date[index_num_simin-1]) + "日" + " " + ground_time + " " + str(table_simin2_text3[index_num_simin3-1])
+          message =  "町田市民球場" + " " + str(new_month_date) + "月" + str(sunday_date[index_num_simin-1]) + "日" + " " + ground_time + " " + str(table_simin2_text3[index_num_simin3-1]) + "\n\n" + "https://www.pf489.com/machida/dselect.html"
         if(sunday_date[index_num_simin] > sunday_date[0]):
-          message =  "町田市民球場" + " " + str(month_date) + "月" + str(sunday_date[index_num_simin-1]) + "日" + " " + ground_time + " " + str(table_simin2_text3[index_num_simin3-1])
+          message =  "町田市民球場" + " " + str(month_date) + "月" + str(sunday_date[index_num_simin-1]) + "日" + " " + ground_time + " " + str(table_simin2_text3[index_num_simin3-1])+ "\n\n" + "https://www.pf489.com/machida/dselect.html"
         
         print(message)
         msg = self.create_mail(TO_ADDRESS_2, '', SUBJECT, message)
