@@ -46,22 +46,12 @@ class GroundNotifier(Scraper) :
       table_month = soup.find_all(class_ = 'TitleColor')[0]
       # スクレイピングした《町田市のグラウンドの空き状況》を変数に格納
       table_simin = soup.find_all(id = "dlRepeat_ctl00_tpItem_dgTable")[0]
-      # table_fuji = soup.find_all(id = "dlRepeat_ctl01_tpItem_dgTable")[0]
-      # table_turu = soup.find_all(id = "dlRepeat_ctl02_tpItem_dgTable")[0]
-      # table_midori = soup.find_all(id = "dlRepeat_ctl03_tpItem_dgTable")[0]
-      # table_ono = soup.find_all(id = "dlRepeat_ctl04_tpItem_dgTable")[0]
-      # table_nozuta = soup.find_all(id = "dlRepeat_ctl05_tpItem_dgTable")[0]
 
 
       # 日曜日の日付を格納する変数を宣言
       sunday_date = []
       # グラウンドの空き状況を格納する変数を宣言
       result_simin = []
-      # result_fuji = []
-      # result_turu = []
-      # result_midori = []
-      # result_ono = []
-      # result_nozuta = []
 
       # 日曜日の日付をsunday_dateに格納する
       # スクレイピングしたものをテキスト化
@@ -111,6 +101,7 @@ class GroundNotifier(Scraper) :
 
       if("空きあり" in message_simin):
         # 町田市民球場の空き状況に△があった場合はクリックする
+        #月２桁
         new_month_date = int(month_date) + 1
         if("空きあり" in message_simin and sunday_date[index_num_simin-1] < sunday_date[0] and sunday_date[index_num_simin-1] >= 10):
             self.click('#dlRepeat_ctl00_tpItem_dgTable_ctl02_b2021' + '0' + str(new_month_date) + str(sunday_date[index_num_simin - 1]))
@@ -178,9 +169,6 @@ class GroundNotifier(Scraper) :
           print("空きなし")
           # ブラウザを終了する
       self.driver.quit()
-        
-
-        #   message = message_simin + "\n\n" + message_fuji + "\n\n" + message_turu + "\n\n" + message_midori + "\n\n" + message_ono + "\n\n" + message_nozuta + "\n\n" +"https://www.pf489.com/machida/"
 
 if __name__ == '__main__':
   notifier = GroundNotifier()
